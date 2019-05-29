@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 sudo yum install tree -y
 
 sudo -u ec2-user -i <<'EOF'
