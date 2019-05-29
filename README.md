@@ -6,7 +6,7 @@ We mainly use linear regression algorithm as the baseline algorithm, and use XGB
 To run this notebook, you have to download trip data from Amazon S3 bucket to nyc-tlc directory in your computer:
 
 ## TODO download data and unzip archive file commands [Question 1]
-
+<pre>
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-01.csv
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-02.csv
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-03.csv
@@ -15,6 +15,8 @@ https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-05.csv
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-06.csv
 https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv
 https://s3.amazonaws.com/nyc-tlc/misc/taxi_zones.zip (unzip)
+</pre>
+
 After download, your local directory structure should be:
 
 <pre>
