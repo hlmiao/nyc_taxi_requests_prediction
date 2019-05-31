@@ -79,3 +79,39 @@ class NycTaxiAnalyzer:
         print('filter total_amount:', sample_manhattan.shape, time.time()-start)
 
         return sample_manhattan
+    
+    def get_all_index_and_static(self, last_id, id_name):
+        start = time.time()
+        all_id = np.array([i for i in range(int(last_id)) for _ in range(self.manhattan_location_num)])
+        all_LocationID = np.array([i for _ in range(int(last_id)) for i in self.manhattan_location_ids])
+        print('all_id:', all_id.shape, all_id)
+        print('all_LocationID:', all_LocationID.shape, all_LocationID)
+
+        all_index = pd.DataFrame({id_name: all_id, 'LocationID': all_LocationID})
+        all_index.set_index([id_name, 'LocationID'], inplace=True)
+        print('all_index:', all_index.shape)
+
+        all_static = pd.DataFrame({id_name: all_id, 'LocationID': all_LocationID})
+        all_static['tpep_pickup_datetime'] = pd.to_timedelta(all_static[id_name]*5*60, unit='s') + self.first_datetime
+        print('tpep_pickup_datetime:', time.time()-start)
+        #all_static['tpep_pickup_year'] = all_static['tpep_pickup_datetime'].dt.year
+        #print('tpep_pickup_year:', time.time()-start)
+        all_static['tpep_pickup_month'] = all_static['tpep_pickup_datetime'].dt.month
+        print('tpep_pickup_month:', time.time()-start)
+        all_static['tpep_pickup_day'] = all_static['tpep_pickup_datetime'].dt.day
+        print('tpep_pickup_day:', time.time()-start)
+        all_static['tpep_pickup_hour'] = all_static['tpep_pickup_datetime'].dt.hour
+        print('tpep_pickup_hour:', time.time()-start)
+        all_static['tpep_pickup_weekday'] = all_static['tpep_pickup_datetime'].dt.weekday
+        print('tpep_pickup_weekday:', time.time()-start)
+        all_static['is_weekend'] = all_static['tpep_pickup_weekday'].map(lambda x: x >= 5 and 1 or 0)
+        print('is_weekend:', time.time()-start)
+        all_static['is_morning_peak'] = all_static['tpep_pickup_hour'].map(lambda x: 7 <= x <= 9 and 1 or 0)
+        print('is_morning_peak:', time.time()-start)
+        all_static['is_evening_peak'] = all_static['tpep_pickup_hour'].map(lambda x: 17 <= x <= 19 and 1 or 0)
+        print('is_evening_peak:', time.time()-start)
+        all_static.drop(['tpep_pickup_datetime'], axis=1, inplace=True)
+        all_static.set_index([id_name, 'LocationID'], inplace=True)
+        print('all_static:', all_static.shape)
+        
+        return all_index, all_static
