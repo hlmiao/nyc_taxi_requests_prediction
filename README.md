@@ -5,7 +5,7 @@ We mainly use linear regression algorithm as the baseline algorithm, and use XGB
 
 To run this notebook, you have to download trip data from Amazon S3 bucket to nyc-tlc directory in your computer:
 
-## TODO download data and unzip archive file commands [Question 1]
+## [Question 1] TODO download data and unzip archive file commands
 <pre>
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-01.csv
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-02.csv
@@ -56,18 +56,26 @@ Since newest NYC Taxi dataset only provides `PULocationID` and `DOLocationID`, i
 
 We load all data from [nyc-tlc/trip data/] between Jan and June 2018, and filter abnormal data. We use `matplotlib` and `geopandas` to visualize some columns and help us to understand the trip data.
 
-## [Question 2] TODO: load Manhattan data: from 2018-01 to 2018-06, call filter_abnormal_data to filter data
+## [Question 2]
 
-## [Question 3.1] TODO: Show first 5 rows of sample_manhattan
+TODO: load Manhattan data: from 2018-01 to 2018-06, call filter_abnormal_data to filter data
 
-## [Question 3.2] TODO: Show statistics of sample_manhattan
+## [Question 3.1]
+
+TODO: Show first 5 rows of sample_manhattan
+
+## [Question 3.2]
+
+TODO: Show statistics of sample_manhattan
 
 ### Feature Prepare
 
 We set the `5min_id`, `15min_id` and `30min_id` to represent 5min, 15min and 30min slot. For example, time between 2018-01-01 00:00:00 and 2018-01-01 00:05:00 has a `5min_id` as 0, and time between 2018-01-01 00:05:00 and 2018-01-01 00:10:00 has a `5min_id` as 1, and the similar with `15min_id` and `30min_id`. For each `Xmin_id` (X represents 5, 15 or 30), we predict the requests in all 69 zones. We have some `static features` such as `month`, `day`, `hour`, `weekday`, `is_weekend`, `is_morning_peak`, `is_evening_pick` for all `Xmin_id` and zones. Also we can extend more static features such as weather and zone features. Other `dynamic features` includes requests in `5min ago`, `10min ago`, `15min ago`, `7days ago`, etc. Also we can extend more dynamic features such as total passengers in 5min ago. At last, we generate 34 features for each `Xmin_id` and zone.
 
-## Train and Validate
+### Train and Validate
 
 We split all data into train and validate part. We demonstrate 4 methods to forecast requests: XGBoost, LightGBM, linear regression implemented using sklearn and linear regression implemented using TensorFlow, and evaluate the models using mean absolute error (MAE). We also visualize the prediction results between 2018-01-01 00:00:00 and 2018-01-01 00:05:00 using `geopandas` (the darker the color, the more demand), and we can visualize any time slot using this method.
 
-## [Challenge Question] TODO: Add new prediction algorithm or change parameters of above 4 prediction algorithms
+## [Challenge Question]
+
+TODO: Add new prediction algorithm or change parameters of above 4 prediction algorithms
