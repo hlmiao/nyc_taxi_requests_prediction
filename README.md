@@ -70,7 +70,7 @@ TODO: Show statistics of sample_manhattan
 
 ## [Challenge Question]
 
-TODO: Add new prediction algorithm or change parameters of above 4 prediction algorithms
+TODO: Add new prediction algorithm or change parameters of below 4 prediction algorithms
 
 ### Feature Prepare
 
