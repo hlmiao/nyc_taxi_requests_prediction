@@ -128,56 +128,6 @@ class NycTaxiAnalyzer:
         self.data = pd.concat(samples, ignore_index=True)
         logging.info(f'concat: {time.time()-start} {self.data.shape}')
 
-
-    # filter_abnormal_data: tpep_pickup_datetime, tpep_dropoff_datetime, trip_distance, trip duration, trip_speed, total_amount, etc.
-    def filter_abnormal_data(self):
-        sample = self.data
-
-        start = time.time()
-        sample = sample[sample['trip_distance'] > 0]
-        logging.info(f'filter trip_distance>0: {time.time()-start} {sample.shape}')
-
-        start = time.time()
-        sample = sample[sample['trip_duration'] > 0]
-        logging.info(f'filter trip_duration>0: {time.time()-start} {sample.shape}')
-
-        start = time.time()
-        sample = sample[sample['trip_speed'] > 0]
-        sample = sample[sample['trip_speed'] <= 200]
-        logging.info(f'filter trip_speed<=200: {time.time()-start} {sample.shape}')
-
-        start = time.time()
-        sample = sample[sample['total_amount'] > 0]
-        logging.info(f'filter total_amount>0: {time.time()-start} {sample.shape}')
-        
-        """        
-        # filter too large total_amount, trip_distance, trip_duration
-        m = np.mean(sample['total_amount'])
-        s = np.std(sample['total_amount'])
-        logging.info(f'total_amount m:{m} s:{s}')
-        sample = sample[sample['total_amount'] <= m + 10*s]
-        #sample = sample[sample_manhattan['total_amount'] >= m - 10*s]
-        logging.info(f'filter total_amount<={m+10*s}: {time.time()-start} {sample.shape}')
-
-        m = np.mean(sample['trip_distance'])
-        s = np.std(sample['trip_distance'])
-        logging.info(f'trip_distance m:{m} s:{s}')
-        sample = sample[sample['trip_distance'] <= m + 20*s]
-        #sample = sample[sample['trip_distance'] >= m - 20*s]
-        logging.info(f'filter trip_distance<={m+20*s}: {time.time()-start} {sample.shape}')
-
-        m = np.mean(sample['trip_duration'])
-        s = np.std(sample['trip_duration'])
-        logging.info(f'trip_duration m:{m} s:{s}')
-        sample = sample[sample['trip_duration'] <= m + 2*s]
-        #sample = sample[sample['trip_duration'] >= m - 2*s]
-        logging.info(f'filter trip_duration<={m+2*s}: {time.time()-start} {sample.shape}')
-        """
-
-        logging.info(f'sample.shape: {sample.shape}')
-        
-        self.data = sample
-
     
     def get_all_index_and_static(self, last_id, id_name):
         start = time.time()

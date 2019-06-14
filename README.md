@@ -1,6 +1,8 @@
-# nyc_taxi_requests_prediction
+# NYC Taxi Requests Prediction
 
-To demonstrate the demand forecast in each grid at 5min, 15min and 30min slot, we use the yellow New York City Taxi and Limousine Commission (TLC) Trip Record Data between Jan 2018 and June 2018 in Manhattan from AWS public datasets as source data (https://registry.opendata.aws/nyc-tlc-trip-records-pds/). We split the dataset into train part (2018.01.01-2018.05.31) and validate part (2018.06.01-2018.06.30). We demonstrate 4 methods to forecast demand: XGBoost, LightGBM, linear regression implemented using sklearn and linear regression implemented using TensorFlow, and evaluate the models using mean absolute error (MAE).
+ABC company is a ride hailing company, they have large volume of subscribe users using their mobile app to get transportation services from local drivers. The mobile app for passengers and drivers will upload activities data to server for data analyst. ABC company wants to leverage AI/Machine Learning technologies to improve their business. One of their key requirements is demand forecast. They prefer to split a city into different grid, and forecast the demand in each grid at 5min, 15min and 30min slot. If the demand goes high in future, ABC company will increase the price in that grid to slow down the demands.
+
+To demonstrate the demand forecast in each grid at 5min, 15min and 30min slot, we use the yellow New York City Taxi and Limousine Commission (TLC) Trip Record Data between Jan 2018 and June 2018 in Manhattan from AWS public datasets as source data (https://registry.opendata.aws/nyc-tlc-trip-records-pds/). We split the dataset into train part (2018.04.01-2018.05.31) and validate part (2018.06.01-2018.06.30). We demonstrate 4 methods to forecast demand: XGBoost, LightGBM, linear regression implemented using sklearn and linear regression implemented using TensorFlow, and evaluate the models using mean absolute error (MAE).
 
 We mainly use linear regression algorithm as the baseline algorithm, and use XGBoost as the main algorithm. XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, flexible and portable. It implements machine learning algorithms under the Gradient Boosting framework. XGBoost provides a parallel tree boosting (also known as GBDT, GBM) that solve many data science problems in a fast and accurate way.
 
@@ -8,11 +10,9 @@ To run this notebook, you have to download trip data from Amazon S3 bucket to ny
 
 ## [Question 1]
 
-TODO download data and unzip archive file commands
+TODO: download data and unzip archive file commands
+
 <pre>
-https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-01.csv
-https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-02.csv
-https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-03.csv
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-04.csv
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-05.csv
 https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2018-06.csv
@@ -49,22 +49,17 @@ We import all useful packages, and set the `first_datetime` to 2018-04-01 00:00:
 
 ### Taxi Zones
 
-Since newest NYC Taxi dataset only provides `PULocationID` and `DOLocationID`, instead of `pickup_longitude`, `pickup_latitude`, `dropoff_longitude`, and `dropoff_latitude`, we can only predict requests in each `PULocationID` (zone). We load [taxi _zone_lookup.csv] and [taxi_zones.shp], and use `geopandas` to visualize the zones in Manhattan (69 in total).
-
+Since newest NYC Taxi dataset only provides `PULocationID` and `DOLocationID`, instead of `pickup_longitude`, `pickup_latitude`, `dropoff_longitude`, and `dropoff_latitude` in previous dataset, we can only predict requests in each `PULocationID` (zone). We load [taxi _zone_lookup.csv] and [taxi_zones.shp], and use `geopandas` to visualize the zones in Manhattan (69 in total).
 
 ### Data Prepare
 
-We load all data from [nyc_tlc/trip_data/] between Jan and June 2018, and filter abnormal data. We use `matplotlib` and `geopandas` to visualize some columns and help us to understand the trip data.
+We load all data from [nyc_tlc/trip_data/] between April and June 2018, and filter abnormal data. We use `matplotlib` and `geopandas` to visualize some columns and help us to understand the trip data.
 
 ## [Question 2]
 
 TODO: load Manhattan data: from 2018-04 to 2018-06, call filter_abnormal_data to filter data
 
-## [Question 3.1]
-
-TODO: Show first 5 rows of sample_manhattan
-
-## [Question 3.2]
+## [Question 3]
 
 TODO: Show statistics of sample_manhattan
 
