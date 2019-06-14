@@ -67,7 +67,7 @@ Show statistics of the prepared sample data.
 
 ## [Challenge Question]
 
-Add new prediction algorithm or change parameters of below 3 prediction algorithms.
+Add new prediction algorithm.
 
 ### Feature Prepare
 
