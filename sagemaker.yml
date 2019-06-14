@@ -1,0 +1,64 @@
+Description: "OpenData Contest SageMaker"
+Resources:
+  OpenDataContest:
+    Type: "AWS::SageMaker::NotebookInstance"
+    Properties:
+      InstanceType: "ml.m5.xlarge"
+      RoleArn: !GetAtt ExecutionRole.Arn
+      LifecycleConfigName: !GetAtt OpenDataContestLifecycleConfig.NotebookInstanceLifecycleConfigName
+  OpenDataContestLifecycleConfig:
+    Type: "AWS::SageMaker::NotebookInstanceLifecycleConfig"
+    Properties:
+      OnStart:
+        - Content:
+            Fn::Base64: >
+                #!/bin/sh
+
+                set -e
+
+                sudo yum install tree -y
+
+                sudo -u ec2-user -i <<'EOF'
+
+                # This will affect only the Jupyter kernel called "conda_python3".
+                source activate python3
+
+                # Replace myPackage with the name of the package you want to install.
+                python3 -m pip install geopandas xgboost lightgbm descartes pykerberos
+                # You can also perform "conda install" here as well.
+
+                cd /home/ec2-user/SageMaker
+                git clone https://github.com/whn09/nyc_taxi_requests_prediction.git
+
+                source deactivate
+
+                EOF
+  ExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - 
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "sagemaker.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - 
+          PolicyName: "root"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - 
+                Effect: "Allow"
+                Action: "*"
+                Resource: "*"
+Outputs:
+  BasicNotebookInstanceId:
+    Value: !Ref OpenDataContest
+  BasicNotebookInstanceLifecycleConfigId:
+    Value: !Ref OpenDataContestLifecycleConfig
